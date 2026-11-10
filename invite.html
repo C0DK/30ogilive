@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="da">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#c8102e">
+  <title>Tillykke, Nina!</title>
+  <meta property="og:title" content="Tillykke, Nina!">
+  <meta property="og:description" content="Voksenvennerne fejrer dig.">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
+  <style>
+    :root {
+      --red: #c8102e;
+      --navy: #1d2b53;
+      --cream: #fff4e0;
+      --yellow: #ffb703;
+      --pink: #ff5d8f;
+      --teal: #2ec4b6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--navy);
+      font-family: ui-rounded, "Nunito", "Trebuchet MS", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, #ffe3b0 0, transparent 40%),
+        radial-gradient(circle at 85% 70%, #ffd1e0 0, transparent 40%),
+        var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* Guirlande */
+    .bunting {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 130px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .pennant {
+      position: absolute;
+      width: 38px;
+      margin-left: -19px;
+      transform-origin: 50% 0;
+      animation: swing 2.4s ease-in-out infinite alternate;
+    }
+
+    .pennant.tri {
+      height: 50px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .pennant.dk svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .12);
+    }
+
+    @keyframes swing {
+      from {
+        transform: rotate(-7deg);
+      }
+
+      to {
+        transform: rotate(7deg);
+      }
+    }
+
+    /* Indhold */
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 110px 20px 48px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-top: 3rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .95rem;
+      color: var(--red);
+    }
+
+    h1 {
+      margin: .15em 0 0;
+      font-size: clamp(2.6rem, 11vw, 4.6rem);
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    h1 .name {
+      color: var(--red);
+      display: inline-block;
+      animation: wobble 3s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+
+      0%,
+      100% {
+        transform: rotate(-2deg);
+      }
+
+      50% {
+        transform: rotate(2deg) scale(1.04);
+      }
+    }
+
+    .thirty-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: clamp(10px, 50vw, 50px);
+      margin-top: 8px;
+    }
+
+    .thirty {
+      display: flex;
+      font-size: clamp(120px, 30vw, 230px);
+      font-weight: 900;
+      line-height: .95;
+    }
+
+    .thirty span {
+      display: inline-block;
+      text-shadow: 0 6px 0 var(--navy);
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+
+    .thirty span:nth-child(1) {
+      color: var(--red);
+    }
+
+    .thirty span:nth-child(2) {
+      color: var(--yellow);
+      animation-delay: .25s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-16px) rotate(3deg);
+      }
+    }
+
+    .pole {
+      position: relative;
+      width: 6px;
+      height: clamp(100px, 24vw, 160px);
+      background: #8a6a4f;
+      border-radius: 3px;
+      flex: none;
+    }
+
+    .pole::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    .flag {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: clamp(52px, 13vw, 80px);
+      transform-origin: left center;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+
+    .flag svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .pole.right .flag {
+      animation-delay: -.4s;
+    }
+
+    @keyframes wave {
+
+      0%,
+      100% {
+        transform: skewY(-5deg) scaleX(1);
+      }
+
+      50% {
+        transform: skewY(5deg) scaleX(.94);
+      }
+    }
+
+    .lede {
+      margin: 14px 0 0;
+      font-size: clamp(1.15rem, 4.5vw, 1.45rem);
+      font-weight: 700;
+    }
+
+    .card {
+      max-width: 520px;
+      margin: 30px auto 0;
+      padding: 26px 22px 24px;
+      background: #fff;
+      border: 3px solid var(--navy);
+      border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--navy);
+      transform: rotate(-1deg);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .when {
+      margin: .2em 0 0;
+      font-size: clamp(1.45rem, 6vw, 2.05rem);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .sub {
+      margin: .4em 0 1.1em;
+      font-size: 1.05rem;
+    }
+
+    .count {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 0 0 1.2em;
+    }
+
+    .count div {
+      background: var(--cream);
+      border: 2px solid var(--navy);
+      border-radius: 12px;
+      padding: 8px 2px 6px;
+    }
+
+    .count b {
+      display: block;
+      font-size: clamp(1.4rem, 6vw, 1.9rem);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .count small {
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .now {
+      margin: 0 0 1.2em;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: var(--red);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      font: inherit;
+      font-weight: 800;
+      color: var(--navy);
+      cursor: pointer;
+      background: var(--yellow);
+      border: 3px solid var(--navy);
+      border-radius: 999px;
+      padding: .65em 1.25em;
+      box-shadow: 0 4px 0 var(--navy);
+      transition: transform .08s, box-shadow .08s;
+    }
+
+    .btn.alt {
+      background: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--navy);
+    }
+
+    .reply {
+      min-height: 1.5em;
+      margin: 1em 0 0;
+      font-weight: 800;
+      color: var(--red);
+    }
+
+    .sign {
+      margin: 80px 0 0;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .hint {
+      margin: 6px 0 0;
+      font-size: .85rem;
+      opacity: .7;
+    }
+
+    /* Balloner og konfetti */
+    .balloons {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 4;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      pointer-events: auto;
+      cursor: pointer;
+      animation: rise linear infinite;
+      will-change: transform;
+    }
+
+    .balloon i {
+      display: block;
+      position: relative;
+      width: var(--s);
+      height: calc(var(--s) * 1.25);
+      border-radius: 50% 50% 48% 48% / 58% 58% 42% 42%;
+      background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .65) 0 11%, transparent 12%), var(--c);
+      transform-origin: 50% 100%;
+      animation: sway ease-in-out infinite alternate;
+    }
+
+    .balloon i::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 60px;
+      background: rgba(29, 43, 83, .45);
+      transform: translateX(-50%);
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(calc(-100vh - 280px));
+      }
+    }
+
+    @keyframes sway {
+      from {
+        transform: translateX(-14px) rotate(-6deg);
+      }
+
+      to {
+        transform: translateX(14px) rotate(6deg);
+      }
+    }
+
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+      }
+
+      .balloons {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bunting" id="bunting"></div>
+  <div class="balloons" id="balloons"></div>
+  <canvas id="confetti"></canvas>
+
+  <main class="wrap" data-title="Tillykke, Nina!">
+    <h1>Tillykke, <span class="name">Nina!</span></h1>
+
+    <div class="thirty-row" aria-label="30 år">
+      <div class="pole" aria-hidden="true">
+        <div class="flag"><svg viewBox="0 0 37 28">
+            <rect width="37" height="28" fill="#c8102e" />
+            <rect x="12" width="4" height="28" fill="#fff" />
+            <rect y="12" width="37" height="4" fill="#fff" />
+          </svg></div>
+      </div>
+      <div class="thirty" aria-hidden="true"><span>3</span><span>0</span></div>
+      <div class="pole right" aria-hidden="true">
+        <div class="flag"><svg viewBox="0 0 37 28">
+            <rect width="37" height="28" fill="#c8102e" />
+            <rect x="12" width="4" height="28" fill="#fff" />
+            <rect y="12" width="37" height="4" fill="#fff" />
+          </svg></div>
+      </div>
+    </div>
+
+    <p class="lede">og stadig i live? Det skal fejres.</p>
+
+    <section class="card">
+      <h2>Voksenvenner inviterer til selskab</h2>
+      <p class="when">Tirsdag 24. november<br>kl. 16.00</p>
+      <p class="sub">Vi henter dig derhjemme!</p>
+
+      <div id="countdown"></div>
+
+      <div class="actions">
+        <button class="btn" id="ready" type="button">Jeg er klar!</button>
+        <button class="btn alt" id="ics" type="button">Læg i kalenderen</button>
+      </div>
+      <p class="reply" id="reply" aria-live="polite"></p>
+    </section>
+
+    <p class="eyebrow">Ha' en dejlig fødseldag din gamle gavtyv</p>
+    <p class="hint">Tip: prøv at ramme en ballon.</p>
+
+    <p class="sign">PS: KÆFT DU ER GAMMEL</p>
+  </main>
+
+  <script>
+    (() => {
+      // ---- Rediger her ----
+      const START = new Date(2026, 10, 24, 16, 0, 0); // 24. november 2026 kl. 16.00 (lokal tid)
+      // ---------------------
+
+      const $ = (id) => document.getElementById(id);
+      const pick = (a) => a[Math.floor(Math.random() * a.length)];
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const palette = ['#c8102e', '#ffb703', '#ff5d8f', '#2ec4b6', '#1d2b53', '#ffffff', '#7bd389'];
+      const DK = '<svg viewBox="0 0 37 28" aria-hidden="true"><rect width="37" height="28" fill="#c8102e"/><rect x="12" width="4" height="28" fill="#fff"/><rect y="12" width="37" height="4" fill="#fff"/></svg>';
+
+      // ---- Konfetti ----
+      const cv = $('confetti');
+      const ctx = cv.getContext('2d');
+      let W = 0, H = 0;
+      let parts = [];
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function burst(x, y, n = 80, colors = palette) {
+        for (let i = 0; i < n; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const s = 3 + Math.random() * 9;
+          parts.push({
+            x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 5,
+            w: 6 + Math.random() * 6, h: 3 + Math.random() * 5,
+            r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.4,
+            c: pick(colors), g: 0.2, drag: 0.985, life: 0, max: 110 + Math.random() * 80, wob: 0
+          });
+        }
+      }
+
+      function drizzle() {
+        if (parts.length > 260) return;
+        parts.push({
+          x: Math.random() * W, y: -12, vx: (Math.random() - 0.5) * 1.2, vy: 1 + Math.random() * 1.5,
+          w: 6 + Math.random() * 6, h: 3 + Math.random() * 5,
+          r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.2,
+          c: pick(palette), g: 0.01, drag: 1, life: 0, max: 99999, wob: Math.random() * 6.28
+        });
+      }
+
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const p = parts[i];
+          p.life++;
+          p.vx *= p.drag; p.vy = p.vy * p.drag + p.g;
+          p.x += p.vx + Math.sin(p.life * 0.05 + p.wob) * (p.wob ? 0.8 : 0);
+          p.y += p.vy; p.r += p.vr;
+          const fade = p.max < 99999 ? Math.max(0, 1 - Math.max(0, p.life - (p.max - 30)) / 30) : 1;
+          if (p.y > H + 20 || fade <= 0) {parts.splice(i, 1); continue;}
+          ctx.save();
+          ctx.globalAlpha = fade;
+          ctx.translate(p.x, p.y); ctx.rotate(p.r);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // ---- Guirlande ----
+      function buildBunting() {
+        const el = $('bunting');
+        const w = window.innerWidth;
+        const sag = Math.min(46, w * 0.05);
+        const n = Math.max(6, Math.round(w / 58));
+        const cols = ['#ffb703', '#ff5d8f', '#2ec4b6', '#1d2b53'];
+        el.innerHTML = `<svg width="${w}" height="${sag + 6}" style="position:absolute;top:0;left:0" aria-hidden="true"><path d="M0 2 Q${w / 2} ${2 + 2 * sag} ${w} 2" fill="none" stroke="#1d2b53" stroke-width="2"/></svg>`;
+        for (let i = 0; i < n; i++) {
+          const t = (i + 0.5) / n;
+          const p = document.createElement('div');
+          const isFlag = i % 2 === 0;
+          p.className = 'pennant ' + (isFlag ? 'dk' : 'tri');
+          p.style.left = (t * w) + 'px';
+          p.style.top = (2 + 4 * sag * t * (1 - t)) + 'px';
+          p.style.animationDelay = (-Math.random() * 2.4) + 's';
+          if (isFlag) p.innerHTML = DK; else p.style.background = cols[(i / 2) % cols.length | 0];
+          el.appendChild(p);
+        }
+      }
+
+      // ---- Balloner ----
+      function spawnBalloon(fresh) {
+        const b = document.createElement('div');
+        const i = document.createElement('i');
+        const s = 44 + Math.random() * 30;
+        const c = pick(['#c8102e', '#ffb703', '#ff5d8f', '#2ec4b6', '#7b61ff']);
+        b.className = 'balloon';
+        b.style.left = (Math.random() * 92) + 'vw';
+        b.style.setProperty('--s', s + 'px');
+        b.style.setProperty('--c', c);
+        b.style.animationDuration = (14 + Math.random() * 14) + 's';
+        b.style.animationDelay = fresh ? '0s' : (-Math.random() * 22) + 's';
+        i.style.animationDuration = (2 + Math.random() * 2) + 's';
+        i.style.animationDelay = (-Math.random() * 2) + 's';
+        b.appendChild(i);
+        b.addEventListener('pointerdown', (e) => {
+          e.stopPropagation();
+          const r = i.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top + r.height / 2, 45, [c, '#ffffff', c, '#ffb703']);
+          b.remove();
+          setTimeout(() => spawnBalloon(true), 2500);
+        });
+        $('balloons').appendChild(b);
+      }
+
+      // ---- Nedtælling ----
+      const cd = $('countdown');
+      let timer = null;
+      function tick() {
+        const d = START - new Date();
+        if (d <= 0) {
+          const late = -d > 12 * 3600 * 1000;
+          cd.innerHTML = '<p class="now">' + (late ? 'Tillykke endnu en gang, Nina!' : 'Nu er det nu. Vi er på vej!') + '</p>';
+          clearInterval(timer);
+          return;
+        }
+        const s = Math.floor(d / 1000);
+        const parts4 = [
+          [Math.floor(s / 86400), 'dage'],
+          [Math.floor(s % 86400 / 3600), 'timer'],
+          [Math.floor(s % 3600 / 60), 'min'],
+          [s % 60, 'sek']
+        ];
+        cd.innerHTML = '<div class="count">' + parts4.map(([v, l]) => `<div><b>${v}</b><small>${l}</small></div>`).join('') + '</div>';
+      }
+
+      // ---- Kalender ----
+      function ics() {
+        const p = (n) => String(n).padStart(2, '0');
+        const f = (d) => `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
+        const end = new Date(START.getTime() + 3600 * 1000);
+        const lines = [
+          'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Voksenvennerne//DA', 'BEGIN:VEVENT',
+          'UID:nina-30-' + f(START) + '@30ogi.live',
+          'DTSTAMP:' + f(new Date()),
+          'DTSTART:' + f(START), 'DTEND:' + f(end),
+          'SUMMARY:Voksenvennerne henter Nina',
+          'DESCRIPTION:Vi henter dig kl. 16.00. Resten er en hemmelighed.',
+          'BEGIN:VALARM', 'TRIGGER:-PT1H', 'ACTION:DISPLAY', 'DESCRIPTION:Voksenvennerne henter dig om en time', 'END:VALARM',
+          'END:VEVENT', 'END:VCALENDAR'
+        ];
+        const blob = new Blob([lines.join('\r\n')], {type: 'text/calendar'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'nina-30.ics';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      }
+
+      // ---- Start ----
+      resizeCanvas();
+      buildBunting();
+      tick(); timer = setInterval(tick, 1000);
+      const nb = window.innerWidth < 600 ? 7 : 12;
+      if (!reduced) for (let i = 0; i < nb; i++) spawnBalloon(false);
+      requestAnimationFrame(frame);
+      if (!reduced) {
+        setInterval(drizzle, 220);
+        setTimeout(() => {burst(W * 0.25, H * 0.4, 70); burst(W * 0.75, H * 0.4, 70);}, 400);
+      }
+
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => {resizeCanvas(); buildBunting();}, 150);
+      });
+
+      document.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('button, a')) return;
+        burst(e.clientX, e.clientY, 40);
+      });
+
+      $('ready').addEventListener('click', (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        burst(r.left + r.width / 2, r.top, 140);
+        burst(W * 0.2, H * 0.6, 60); burst(W * 0.8, H * 0.6, 60);
+        $('reply').textContent = 'Perfekt. Så ses vi kl. 16!';
+      });
+      $('ics').addEventListener('click', ics);
+    })();
+  </script>
+</body>
+
+</html>

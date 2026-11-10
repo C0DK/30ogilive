@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="da">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <title>Indlæser…</title>
+
+  <!--
+  Siden før tidspunktet.
+  site.js indeholder tidsstemplerne og showPage().
+  index.html er indgangen: den henter den side, der passer til tidspunktet,
+  og viser den — URL'en ændrer sig aldrig.
+  Når nedtællingen er færdig, skifter siden selv videre til invitationen.
+-->
+  <script src="site.js?v=1"></script>
+
+  <style>
+    /* ==========================================================
+       INDSTILLINGER — start her, hvis du vil ændre looket
+       ========================================================== */
+    :root {
+      --bg: #000;
+      /* baggrund */
+      --fg: #f2f2f2;
+      /* procenten og tallene */
+      --muted: #8a8a8a;
+      /* alt det andet */
+      --line: #2a2a2a;
+      /* streger */
+      --accent: #f2f2f2;
+      /* progressbarens fyld */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--fg);
+      font-family: ui-rounded, "Nunito", "Trebuchet MS", system-ui, sans-serif;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ==========================================================
+       INDHOLD — titel, procent, progressbar, datoer, nedtælling
+       ========================================================== */
+    .wrap {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(.85rem, 3.4vw, 1.05rem);
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .pct {
+      margin: 0;
+      font-size: clamp(64px, 19vw, 150px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pct .unit {
+      font-size: .38em;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .pct .caret {
+      display: inline-block;
+      font-size: .34em;
+      width: .48em;
+      height: .78em;
+      margin-left: .07em;
+      background: var(--fg);
+      animation: blink 1.1s steps(1, end) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Progressbar: 0 % ved fødslen, 100 % når invitationen åbner */
+    .bar {
+      position: relative;
+      width: min(320px, 70vw);
+      height: 4px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .bar>i {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0%;
+      background: var(--accent);
+    }
+
+    /* Datoerne under baren: fra fødslen til invitationen */
+    .dates {
+      display: flex;
+      justify-content: space-between;
+      width: min(320px, 70vw);
+      font-size: .7rem;
+      letter-spacing: .06em;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Nedtællingen til tidspunktet */
+    .countdown {
+      margin: 0;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown b {
+      color: var(--fg);
+      font-weight: 700;
+    }
+
+    /* ==========================================================
+       KONFETTI — regnen
+       ========================================================== */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==========================================================
+       SIDENS INDHOLD — titel, procent, progressbar, datoer, nedtælling
+       ========================================================== -->
+  <canvas id="confetti"></canvas>
+
+  <main class="wrap" data-title="Indlæser…">
+    <h1 class="title">Bliver Nina 30 og i live?</h1>
+
+    <p class="pct"><span id="pct">0,00</span><span class="unit">%</span><span class="caret" aria-hidden="true"></span>
+    </p>
+
+    <div class="bar" role="progressbar" aria-label="Andel af de 30 år" aria-valuemin="0" aria-valuemax="100" id="bar">
+      <i id="fill"></i>
+    </div>
+
+    <div class="dates">
+      <span id="since"></span>
+      <span id="until"></span>
+    </div>
+
+    <p class="countdown" id="countdown"></p>
+  </main>
+
+  <script>
+    (() => {
+      const SITE = window.SITE;
+      const $ = (id) => document.getElementById(id);
+      const pick = (a) => a[Math.floor(Math.random() * a.length)];
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const rain = ['#f2f2f2', '#c2c2c2', '#8f8f8f', '#5a5a5a', '#d8d8d8'];
+
+      // ---- Konfetti ----
+      const cv = $('confetti');
+      const ctx = cv.getContext('2d');
+      let W = 0, H = 0;
+      let parts = [];
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      // Regn: partikler der falder ned forbi
+      function drizzle() {
+        if (parts.length > 50) return;
+        parts.push({
+          x: Math.random() * W, y: -12, vx: (Math.random() - 0.5) * 1.2, vy: 1 + Math.random() * 1.5,
+          w: 6 + Math.random() * 6, h: 3 + Math.random() * 5,
+          r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.2,
+          c: pick(rain), g: 0.01, drag: 1, life: 0, max: Math.random() * 1000, wob: Math.random() * 6.28
+        });
+      }
+
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const p = parts[i];
+          p.life++;
+          p.vx *= p.drag; p.vy = p.vy * p.drag + p.g;
+          p.x += p.vx + Math.sin(p.life * 0.05 + p.wob) * (p.wob ? 0.8 : 0);
+          p.y += p.vy; p.r += p.vr;
+          const fade = p.max < 99999 ? Math.max(0, 1 - Math.max(0, p.life - (p.max - 30)) / 30) : 1;
+          if (p.y > H + 20 || fade <= 0) {parts.splice(i, 1); continue;}
+          ctx.save();
+          ctx.globalAlpha = fade;
+          ctx.translate(p.x, p.y); ctx.rotate(p.r);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // ---- Datoer ----
+      // Kort form: 14.11.1996 08.22
+      function fmtShort(date) {
+        const p = {};
+        const dtf = new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Europe/Copenhagen', hourCycle: 'h23',
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        for (const {type, value} of dtf.formatToParts(date)) p[type] = value;
+        return `${p.day}.${p.month}.${p.year} ${p.hour}.${p.minute}`;
+      }
+
+      const revealDate = new Date(SITE.reveal);
+      const birthDate = new Date(SITE.birth);
+      $('since').textContent = fmtShort(birthDate);
+      $('until').textContent = fmtShort(revealDate);
+
+      // ---- Procent, progressbar og nedtælling ----
+      const fill = $('fill'), pctEl = $('pct'), bar = $('bar'), cd = $('countdown');
+      const p2 = (n) => String(n).padStart(2, '0');
+
+      function tick() {
+        const now = Date.now();
+        const left = SITE.reveal - now;
+
+        // Tidspunktet er nået: vis invitationen (URL'en ændrer sig ikke)
+        if (left <= 0) {showPage(SITE.next('loading.html').file); return;}
+
+        // Procent siden fødslen
+        const pct = Math.max(0, Math.min(100, (now - SITE.birth) / SITE.span * 100));
+        const digits = pct >= 99.985 ? 3 : 2
+        const txt = pct.toLocaleString('da-DK', {minimumFractionDigits: 2, maximumFractionDigits: digits});
+        fill.style.width = pct.toFixed(4) + '%';
+        pctEl.textContent = txt;
+        bar.setAttribute('aria-valuenow', pct.toFixed(2));
+
+        // Tid til invitationen åbner
+        const s = Math.floor(left / 1000);
+        cd.innerHTML = `<b>${Math.floor(s / 86400)}</b> dage <b>${p2(Math.floor(s % 86400 / 3600))}</b> timer ` +
+          `<b>${p2(Math.floor(s % 3600 / 60))}</b> min <b>${p2(s % 60)}</b> sek`;
+      }
+
+      // ---- Start ----
+      resizeCanvas();
+      tick();
+      setInterval(tick, 100);
+
+      requestAnimationFrame(frame);
+      if (!reduced) setInterval(drizzle, 500);
+
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => {resizeCanvas();}, 150);
+      });
+
+    })();
+  </script>
+</body>
+
+</html>
