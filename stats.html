@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="da">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#c8102e">
+  <title>Ninas status</title>
+  <meta property="og:title" content="Ninas status">
+  <meta property="og:description" content="Alder, statistik og lidt held.">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <script src="site.js?v=1"></script>
+  <style>
+    :root {
+      --red: #c8102e;
+      --navy: #1d2b53;
+      --cream: #fff4e0;
+      --yellow: #ffb703;
+      --pink: #ff5d8f;
+      --teal: #2ec4b6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--navy);
+      font-family: ui-rounded, "Nunito", "Trebuchet MS", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, #ffe3b0 0, transparent 40%),
+        radial-gradient(circle at 85% 70%, #ffd1e0 0, transparent 40%),
+        var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* Guirlande */
+    .bunting {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 130px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .pennant {
+      position: absolute;
+      width: 38px;
+      margin-left: -19px;
+      transform-origin: 50% 0;
+      animation: swing 2.4s ease-in-out infinite alternate;
+    }
+
+    .pennant.tri {
+      height: 50px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .pennant.dk svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .12);
+    }
+
+    @keyframes swing {
+      from {
+        transform: rotate(-7deg);
+      }
+
+      to {
+        transform: rotate(7deg);
+      }
+    }
+
+    /* Indhold */
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 110px 20px 48px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: .01em;
+      color: var(--navy);
+      transform: rotate(-2.5deg);
+      animation: bounceTitle 2.8s ease-in-out infinite;
+    }
+
+    @keyframes bounceTitle {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-2.5deg);
+      }
+
+      50% {
+        transform: translateY(-9px) rotate(1deg);
+      }
+    }
+
+    .card {
+      max-width: 520px;
+      margin: 26px auto 0;
+      padding: 26px 22px 24px;
+      background: #fff;
+      border: 3px solid var(--navy);
+      border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--navy);
+    }
+
+    /* Hver boks hælder lidt forskelligt */
+    .card:nth-of-type(1) {
+      transform: rotate(-1.1deg);
+    }
+
+    .card:nth-of-type(2) {
+      transform: rotate(.7deg);
+    }
+
+    .card:nth-of-type(3) {
+      transform: rotate(-.5deg);
+    }
+
+    .card:nth-of-type(4) {
+      transform: rotate(.9deg);
+    }
+
+    .card:nth-of-type(5) {
+      transform: rotate(-.8deg);
+    }
+
+    .card:nth-of-type(6) {
+      transform: rotate(.4deg);
+    }
+
+    .card h2 {
+      margin: 0;
+      display: inline-block;
+      animation: bounceHead2 2.4s ease-in-out infinite;
+
+      margin: .35em 0 0;
+      font-size: clamp(1.45rem, 6vw, 2.05rem);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    @keyframes bounceHead {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-0.5deg);
+      }
+
+      50% {
+        transform: translateY(-2px) rotate(1.1deg);
+      }
+    }
+
+    @keyframes bounceHead2 {
+
+      0%,
+      100% {
+        transform: translateY(2px) rotate(1.9deg);
+      }
+
+      50% {
+        transform: translateY(-4px) rotate(-1.0deg);
+      }
+    }
+
+    /* Forskellige faser, så overskrifterne ikke hopper i takt */
+    .card:nth-of-type(1) h2 {
+      animation-delay: -0.25s;
+    }
+
+    .card:nth-of-type(2) h2 {
+      animation-delay: -.4s;
+    }
+
+    .card:nth-of-type(3) h2 {
+      animation-delay: -.9s;
+    }
+
+    .card:nth-of-type(4) h2 {
+      animation-delay: -1.3s;
+    }
+
+    .card:nth-of-type(5) h2 {
+      animation-delay: -1.4s;
+    }
+
+    .card:nth-of-type(6) h2 {
+      animation-delay: -2s;
+    }
+
+    .when {
+      margin: .35em 0 0;
+      font-size: clamp(1.45rem, 6vw, 2.05rem);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .when+.when {
+      margin-top: .25em;
+      font-size: clamp(1.15rem, 4.6vw, 1.55rem);
+      color: var(--red);
+    }
+
+    .life {
+      margin: 1em 0 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--red);
+    }
+
+    .sub {
+      margin: .9em 0 0;
+      font-size: 1rem;
+    }
+
+    /* Statusbar */
+    .bar {
+      position: relative;
+      height: 16px;
+      margin: 1.4em 0 0;
+      border: 3px solid var(--navy);
+      border-radius: 999px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .bar>i {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0%;
+      background: var(--red);
+    }
+
+    .bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin: .6em 0 0;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Nedtælling — samme som på invitationssiden */
+    .count {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin: 1.4em 0 0;
+    }
+
+    .count div {
+      background: var(--cream);
+      border: 2px solid var(--navy);
+      border-radius: 12px;
+      padding: 8px 2px 6px;
+    }
+
+    .count b {
+      display: block;
+      font-size: clamp(1.1rem, 5vw, 1.7rem);
+      font-variant-numeric: tabular-nums;
+      font-weight: 900;
+    }
+
+    .count small {
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #949494;
+    }
+
+    /* Kilder og små print */
+    .src {
+      margin: 1.1em 0 0;
+      font-size: .74rem;
+      color: #949494;
+    }
+
+    .src a {
+      color: inherit;
+      text-decoration: underline dotted;
+    }
+
+    .fineprint {
+      margin: .5em 0 0;
+      font-size: .7rem;
+      line-height: 1.45;
+      color: #a8a8a8;
+    }
+
+    /* Enarmet tyvknægt */
+    .slot {
+      max-width: 520px;
+      margin: 26px auto 0;
+    }
+
+    .reel-window {
+      position: relative;
+      height: 58px;
+      margin: 1.2em 0 0;
+      border: 3px solid var(--navy);
+      border-radius: 14px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .reel-window::before,
+    .reel-window::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 12px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .reel-window::before {
+      top: 0;
+      background: linear-gradient(rgba(29, 43, 83, .18), transparent);
+    }
+
+    .reel-window::after {
+      bottom: 0;
+      background: linear-gradient(transparent, rgba(29, 43, 83, .18));
+    }
+
+    .reel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 3px;
+      will-change: transform;
+    }
+
+    .reel-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 52px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .reel-item::before {
+      content: "◆";
+      color: var(--red);
+      font-size: .8em;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 1.4em;
+    }
+
+    .btn {
+      font: inherit;
+      font-weight: 800;
+      color: var(--navy);
+      cursor: pointer;
+      background: var(--yellow);
+      border: 3px solid var(--navy);
+      border-radius: 999px;
+      padding: .65em 1.25em;
+      box-shadow: 0 4px 0 var(--navy);
+      transition: transform .08s, box-shadow .08s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--navy);
+    }
+
+    .btn[disabled] {
+      opacity: .55;
+      cursor: default;
+    }
+
+    .reply {
+      min-height: 1.5em;
+      margin: 1.1em 0 0;
+      font-weight: 800;
+      color: var(--red);
+    }
+
+    /* Garantibevis */
+    .guarantee {
+      position: relative;
+      padding-top: 24px;
+      padding-bottom: 86px;
+    }
+
+    .stamp {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%) rotate(-9deg);
+      border: 4px solid var(--red);
+      border-radius: 12px;
+      padding: .35em .9em;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-size: clamp(.95rem, 4vw, 1.25rem);
+      opacity: .82;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, .6);
+    }
+
+    .guarantee dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .5em 1.2em;
+      margin: 1.2em 0 0;
+    }
+
+    .guarantee dt {
+      color: #949494;
+      font-weight: 700;
+      font-size: .88rem;
+    }
+
+    .guarantee dd {
+      margin: 0;
+      font-weight: 800;
+      font-size: .95rem;
+    }
+
+    .sign {
+      margin: 58px 0 0;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .hint {
+      margin: 50px 0 0;
+      font-size: .85rem;
+      opacity: .7;
+    }
+
+    .link {
+      color: var(--navy);
+      font-weight: 800;
+      text-decoration: underline dotted;
+    }
+
+    /* Balloner og konfetti */
+    .balloons {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      pointer-events: auto;
+      cursor: pointer;
+      animation: rise linear infinite;
+      will-change: transform;
+    }
+
+    .balloon i {
+      display: block;
+      position: relative;
+      width: var(--s);
+      height: calc(var(--s) * 1.25);
+      border-radius: 50% 50% 48% 48% / 58% 58% 42% 42%;
+      background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .65) 0 11%, transparent 12%), var(--c);
+      transform-origin: 50% 100%;
+      animation: sway ease-in-out infinite alternate;
+    }
+
+    .balloon i::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 60px;
+      background: rgba(29, 43, 83, .45);
+      transform: translateX(-50%);
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(calc(-100vh - 280px));
+      }
+    }
+
+    @keyframes sway {
+      from {
+        transform: translateX(-14px) rotate(-6deg);
+      }
+
+      to {
+        transform: translateX(14px) rotate(6deg);
+      }
+    }
+
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+      }
+
+      .balloons {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bunting" id="bunting"></div>
+  <div class="balloons" id="balloons"></div>
+  <canvas id="confetti"></canvas>
+
+  <main class="wrap">
+    <h1>Mens du venter, får du lidt data</h1>
+
+    <!-- ===== Dødsalder ===== -->
+    <section class="card">
+      <h2 class="when">Kun <span id="left-big">46,4</span> år til du dør!</h2>
+
+      <div class="bar"><i id="fill"></i></div>
+      <div class="bar-labels"><span>fødsel</span><span>76,4 år</span></div>
+
+      <p class="life"><span id="life-pct">39,3</span> % af dit liv er over</p>
+
+      <p class="src">Kilde: <a href="https://www.worldometers.info/da/demografi/rumaenien-demografi/" target="_blank"
+          rel="noopener">worldometers.info — Rumæniens demografi</a> (2026)</p>
+      <p class="fineprint">Psst: 76,4 er gennemsnittet for begge køn. For kvinder er det 79,9 — så du har 3,5 år mere
+        end det. Hvad skal du da med al den tid?!</p>
+    </section>
+
+    <!-- ===== Pension ===== -->
+    <section class="card">
+      <h2 class="when" id="pension-when">Kun <b id="pension-big">44,0</b> år til pension.</h2>
+
+      <div id="pension-count"></div>
+
+      <p class="sub"></p>
+
+      <p class="src">Kilde: <a
+          href="https://star.dk/ydelser/pension-og-efterloen/folkepension-tidlig-pension-foertidspension-og-seniorpension/folkepension/folkepensionsalderen-nu-og-fremover"
+          target="_blank" rel="noopener">star.dk — folkepensionsalderen</a> (74 år for fødte fra 1. juli 1996)</p>
+      <p class="fineprint">Psst: de 74 år er et skøn, der ikke er vedtaget af Folketinget endnu. Men du får nok
+        pensionen 2,4
+        år før du dør!</p>
+    </section>
+
+    <!-- ===== Gammel nok ===== -->
+    <section class="card">
+      <h2 class="when">Kun <span id="president">5,0</span> år til at du kan blive præsident i USA</h2>
+      <p class="sub">Man skal være mindst 35 år. Du kan godt begynde at øve dig i at kysse babyer og invadere
+        mellemøstlige lande.</p>
+    </section>
+
+    <!-- ===== Prøv lykken ===== -->
+    <section class="card slot">
+      <h2>Prøv lykken</h2>
+      <p class="sub" style="margin-top:.6em; font-size:1rem">Hvad du kan forvente, når du er over 30:</p>
+
+      <div class="reel-window">
+        <div class="reel" id="reel"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="luck" type="button">Prøv lykken</button>
+      </div>
+      <p class="reply" id="reply" aria-live="polite"></p>
+    </section>
+
+    <!-- ===== Garantibevis ===== -->
+    <section class="card guarantee">
+      <h2>Garantibevis</h2>
+      <div class="stamp">Udløbet for <span id="expired">28</span> år siden</div>
+      <dl>
+        <dt>Vare</dt>
+        <dd>Nina</dd>
+        <dt>Reklamationsret</dt>
+        <dd>2 år</dd>
+      </dl>
+    </section>
+
+    <p class="hint">Det er ikke sådan at blive gammel.<br><a class="link" href="index.html">← tilbage til
+        invitationen</a></p>
+  </main>
+
+  <script>
+    (() => {
+      const SITE = window.SITE;
+      const $ = (id) => document.getElementById(id);
+      const pick = (a) => a[Math.floor(Math.random() * a.length)];
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const palette = ['#c8102e', '#ffb703', '#ff5d8f', '#2ec4b6', '#1d2b53', '#ffffff', '#7bd389'];
+      const DK = '<svg viewBox="0 0 37 28" aria-hidden="true"><rect width="37" height="28" fill="#c8102e"/><rect x="12" width="4" height="28" fill="#fff"/><rect y="12" width="37" height="4" fill="#fff"/></svg>';
+
+      // Forventet levetid ved fødslen i Rumænien (worldometers.info, 2026)
+      const RUMANIA = 76.4;         // begge køn
+      // Folkepensionsalder for fødte fra 1. juli 1996 (star.dk)
+      const PENSION = 74;
+      // Mindstealder for præsident i USA (22. amendment)
+      const PRÆSIDENT = 35;
+      // Reklamationsret i Danmark (forbrugsloven)
+      const REKLAMATION = 2;
+
+      // ---- Konfetti ----
+      const cv = $('confetti');
+      const ctx = cv.getContext('2d');
+      let W = 0, H = 0;
+      let parts = [];
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function burst(x, y, n = 80, colors = palette) {
+        for (let i = 0; i < n; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const s = 3 + Math.random() * 9;
+          parts.push({
+            x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 5,
+            w: 6 + Math.random() * 6, h: 3 + Math.random() * 5,
+            r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.4,
+            c: pick(colors), g: 0.2, drag: 0.985, life: 0, max: 110 + Math.random() * 80, wob: 0
+          });
+        }
+      }
+
+      // Regn: partikler der falder ned forbi
+      function drizzle() {
+        if (parts.length > 90) return;
+        parts.push({
+          x: Math.random() * W, y: -12, vx: (Math.random() - 0.5) * 1.2, vy: 1 + Math.random() * 1.5,
+          w: 6 + Math.random() * 6, h: 3 + Math.random() * 5,
+          r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.2,
+          c: pick(palette), g: 0.01, drag: 1, life: 0, max: 99999, wob: Math.random() * 6.28
+        });
+      }
+
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const p = parts[i];
+          p.life++;
+          p.vx *= p.drag; p.vy = p.vy * p.drag + p.g;
+          p.x += p.vx + Math.sin(p.life * 0.05 + p.wob) * (p.wob ? 0.8 : 0);
+          p.y += p.vy; p.r += p.vr;
+          const fade = p.max < 99999 ? Math.max(0, 1 - Math.max(0, p.life - (p.max - 30)) / 30) : 1;
+          if (p.y > H + 20 || fade <= 0) {parts.splice(i, 1); continue;}
+          ctx.save();
+          ctx.globalAlpha = fade;
+          ctx.translate(p.x, p.y); ctx.rotate(p.r);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // ---- Guirlande ----
+      function buildBunting() {
+        const el = $('bunting');
+        const w = window.innerWidth;
+        const sag = Math.min(46, w * 0.05);
+        const n = Math.max(6, Math.round(w / 58));
+        const cols = ['#ffb703', '#ff5d8f', '#2ec4b6', '#1d2b53'];
+        el.innerHTML = `<svg width="${w}" height="${sag + 6}" style="position:absolute;top:0;left:0" aria-hidden="true"><path d="M0 2 Q${w / 2} ${2 + 2 * sag} ${w} 2" fill="none" stroke="#1d2b53" stroke-width="2"/></svg>`;
+        for (let i = 0; i < n; i++) {
+          const t = (i + 0.5) / n;
+          const p = document.createElement('div');
+          const isFlag = i % 2 === 0;
+          p.className = 'pennant ' + (isFlag ? 'dk' : 'tri');
+          p.style.left = (t * w) + 'px';
+          p.style.top = (2 + 4 * sag * t * (1 - t)) + 'px';
+          p.style.animationDelay = (-Math.random() * 2.4) + 's';
+          if (isFlag) p.innerHTML = DK; else p.style.background = cols[(i / 2) % cols.length | 0];
+          el.appendChild(p);
+        }
+      }
+
+      // ---- Balloner ----
+      function spawnBalloon(fresh) {
+        const b = document.createElement('div');
+        const i = document.createElement('i');
+        const s = 44 + Math.random() * 30;
+        const c = pick(['#c8102e', '#ffb703', '#ff5d8f', '#2ec4b6', '#7b61ff']);
+        b.className = 'balloon';
+        b.style.left = (Math.random() * 92) + 'vw';
+        b.style.setProperty('--s', s + 'px');
+        b.style.setProperty('--c', c);
+        b.style.animationDuration = (14 + Math.random() * 14) + 's';
+        b.style.animationDelay = fresh ? '0s' : (-Math.random() * 22) + 's';
+        i.style.animationDuration = (2 + Math.random() * 2) + 's';
+        i.style.animationDelay = (-Math.random() * 2) + 's';
+        b.appendChild(i);
+        b.addEventListener('pointerdown', (e) => {
+          e.stopPropagation();
+          const r = i.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top + r.height / 2, 45, [c, '#ffffff', c, '#ffb703']);
+          b.remove();
+          setTimeout(() => spawnBalloon(true), 2500);
+        });
+        $('balloons').appendChild(b);
+      }
+
+      // ---- Status ----
+      const YEAR = 365.2425 * 24 * 3600 * 1000;
+      const birth = new Date(SITE.birth);
+      const leftBig = $('left-big'), pensionBig = $('pension-big'), fillEl = $('fill'),
+        lifePct = $('life-pct'), presidentEl = $('president'), expiredEl = $('expired'),
+        pensionCount = $('pension-count');
+
+      // Pensiondatoen: 74-års fødselsdagen
+      const pensionDate = Date.UTC(birth.getUTCFullYear() + PENSION, birth.getUTCMonth(), birth.getUTCDate(),
+        birth.getUTCHours(), birth.getUTCMinutes(), birth.getUTCSeconds());
+
+      // Datoen skrives ud, så den ikke kan blive forkert
+      const fmtDay = new Intl.DateTimeFormat('da-DK', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Copenhagen'
+      }).format(pensionDate);
+      const fmtTime = new Intl.DateTimeFormat('da-DK', {
+        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Copenhagen'
+      }).format(pensionDate);
+
+      function tick() {
+        const now = Date.now();
+
+        // Alder i decimaltal
+        const age = (now - birth.getTime()) / YEAR;
+
+        // Tid til det rumænske gennemsnit, og til folkepension
+        leftBig.textContent = (RUMANIA - age).toLocaleString('da-DK', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+        pensionBig.textContent = (PENSION - age).toLocaleString('da-DK', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+
+        // Tid til man må blive præsident i USA
+        presidentEl.textContent = (PRÆSIDENT - age).toLocaleString('da-DK', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+
+        // Reklamationsretten udløb, da hun fyldte 2 år
+        expiredEl.textContent = Math.round(age - REKLAMATION);
+
+        // Hvor meget af livet der er gået
+        const pct = Math.max(0, Math.min(100, age / RUMANIA * 100));
+        fillEl.style.width = pct.toFixed(2) + '%';
+        lifePct.textContent = pct.toLocaleString('da-DK', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+
+        // Nedtælling til pensionen — år, dage, timer, min, sek
+        const s = Math.max(0, Math.floor((pensionDate - now) / 1000));
+        const YR = 31556952; // 365,2425 dage
+        const years = Math.floor(s / YR);
+        const rest = s - years * YR;
+        pensionCount.innerHTML = '<div class="count">' + [
+          [years, 'år'],
+          [Math.floor(rest / 86400), 'dage'],
+          [Math.floor(rest % 86400 / 3600), 'timer'],
+          [Math.floor(rest % 3600 / 60), 'min'],
+          [rest % 60, 'sek']
+        ].map(([v, l]) => `<div><b>${v}</b><small>${l}</small></div>`).join('') + '</div>';
+      }
+
+      // ---- Enarmet tyvknægt ----
+      const ailments = [
+        'Leverkoma',
+        'Kræft i maven',
+        'Ondt i ryggen',
+        'Diskusprolaps',
+        'Knokkelgigt i knæene',
+        'Migræne',
+        'Forhøjet blodtryk',
+        'Diabetes type 2',
+        'Grå stær på begge øjne',
+        'Resten af tænderne',
+        'Nedsat hørelse',
+        'Astma',
+        'Osteoporose',
+        'Nakkeskive i vejen',
+        'Rygsmerter om morgenen',
+        'Senfugtighed i knæene',
+        'Menisk i 3. klasse',
+        'Hjertekramper på trappen',
+        'Smerter i lænden',
+        'Langsom fordøjelse',
+        'Tørr hud om vinteren',
+        'Stive skuldre',
+        'Vægttab uden grund',
+        'Resten af helbredet'
+      ];
+
+      const reel = $('reel'), luck = $('luck'), reply = $('reply');
+      const LAPS = 3;
+
+      function buildReel() {
+        reel.innerHTML = ailments.concat(ailments, ailments, ailments, ailments)
+          .map((t) => `<span class="reel-item">${t}</span>`).join('');
+      }
+
+      function spin() {
+        const target = Math.floor(Math.random() * ailments.length);
+        const itemH = reel.firstElementChild.offsetHeight;
+        const from = target + (LAPS - 1) * ailments.length;
+        const to = target + LAPS * ailments.length;
+
+        // Sæt rullen tilbage uden animation, og lad den køre videre
+        reel.style.transition = 'none';
+        reel.style.transform = `translateY(-${from * itemH}px)`;
+        void reel.offsetHeight;
+        reel.style.transition = 'transform 3.4s cubic-bezier(.12,.75,.08,1)';
+        reel.style.transform = `translateY(-${to * itemH}px)`;
+
+        luck.disabled = true;
+        reply.textContent = 'Terningen kører…';
+        setTimeout(() => {
+          reply.textContent = 'Du får: ' + ailments[target];
+          luck.disabled = false;
+          const r = luck.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top, 90);
+          burst(W * 0.25, H * 0.55, 50);
+          burst(W * 0.75, H * 0.55, 50);
+        }, 3500);
+      }
+
+      // ---- Start ----
+      resizeCanvas();
+      buildBunting();
+      buildReel();
+      tick();
+      setInterval(tick, 1000);
+      requestAnimationFrame(frame);
+
+      const nb = window.innerWidth < 600 ? 7 : 12;
+      if (!reduced) {
+        for (let i = 0; i < nb; i++) spawnBalloon(false);
+        setInterval(drizzle, 150);
+      }
+
+      luck.addEventListener('click', spin);
+
+      document.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('button, a')) return;
+        burst(e.clientX, e.clientY, 40);
+      });
+
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => {resizeCanvas(); buildBunting();}, 150);
+      });
+    })();
+  </script>
+</body>
+
+</html>
