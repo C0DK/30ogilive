@@ -409,7 +409,27 @@
       pointer-events: none;
       z-index: 5;
     }
+    /* Ballonscore */
+    .score {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 6;
+      padding: .45em .9em;
+      background: #fff;
+      border: 3px solid var(--navy);
+      border-radius: 999px;
+      box-shadow: 0 4px 0 var(--navy);
+      font-weight: 900;
+      text-align: center;
+      pointer-events: none;
+    }
 
+    .score small {
+      display: block;
+      font-size: .7rem;
+      color: var(--red);
+    }
     @media (prefers-reduced-motion: reduce) {
 
       *,
@@ -566,6 +586,63 @@
         }
       }
 
+      // ---- Ballonscore ----
+      let popCount = 0, popTimer, scoreEl = null, scoreN = null, scoreMsg = null;
+      try { popCount = parseInt(localStorage.getItem('ninaPops'), 10) || 0; } catch (e) {}
+      const popMsgs = {
+        1: 'Første ballon!',
+        5: 'Du har for meget fritid',
+        10: 'Stop, det er ikke cookie clicker det her',
+        15: 'Ballonerne har familier, ved du nok',
+        20: 'Det bekymrer du dig tydelivis ikke om',
+        25: 'Seriøst. Gå en tur.',
+        40: 'Din pension venter ikke på dig',
+        50: 'Har du et problem med latex?',
+        75: 'Din læge skal høre om det her',
+        100: 'Det er noget af en dedikation det der',
+        150: 'Ballonerne har startet en fagforening',
+        200: 'Du er officielt ballonernes værste fjende',
+        300: 'Gør noget andet. Nu. Venligst.',
+        500: 'Vi har sendt en patruljevogn til dit hus for et velfærdscheck',
+        750: 'Nu er det ikke sjovt længere',
+        1000: 'Tillykke, du har vundet ingenting!'
+      };
+
+      function ensureScore() {
+        if (scoreEl) return;
+        scoreEl = $('score');
+        if (!scoreEl) {
+          scoreEl = document.createElement('div');
+          scoreEl.className = 'score';
+          scoreEl.id = 'score';
+          scoreEl.innerHTML = '🎈 <b></b><small></small>';
+          document.body.appendChild(scoreEl);
+        }
+        scoreN = scoreEl.querySelector('b');
+        scoreMsg = scoreEl.querySelector('small');
+      }
+
+      function showScore() {
+        if (popCount < 1) return;
+        ensureScore();
+        scoreEl.hidden = false;
+        scoreN.textContent = popCount;
+      }
+
+      function popped() {
+        popCount++;
+        try { localStorage.setItem('ninaPops', popCount); } catch (e) {}
+        showScore();
+        const msg = popMsgs[popCount];
+        if (msg) {
+          scoreMsg.textContent = msg;
+          clearTimeout(popTimer);
+          popTimer = setTimeout(() => { scoreMsg.textContent = ''; }, 3500);
+        }
+      }
+
+      showScore();
+
       // ---- Balloner ----
       function spawnBalloon(fresh) {
         const b = document.createElement('div');
@@ -587,6 +664,7 @@
           burst(r.left + r.width / 2, r.top + r.height / 2, 45, [c, '#ffffff', c, '#ffb703']);
           b.remove();
           setTimeout(() => spawnBalloon(true), 2500);
+          popped();
         });
         $('balloons').appendChild(b);
       }
